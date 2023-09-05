@@ -1,7 +1,22 @@
-import { Body, Controller, Post, Get, Param, Delete,Put, UseGuards, UsePipes } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Param,
+  Delete,
+  Put,
+  UseGuards,
+  UsePipes,
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { User } from "./users.model";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { Roles } from "src/auth/roles-auth.decorator";
@@ -13,44 +28,59 @@ import { ValidationPipe } from "src/pipes/validation.pipe";
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
-  //
-  @ApiOperation({ summary: "User creation" })
+  
+  @ApiOperation({ summary: "Admin creation" })
   @ApiResponse({ status: 200, type: User })
   @UsePipes(ValidationPipe)
-  @Post()
+  @Roles("SUPERADMIN")
+  @UseGuards(RolesGuard)
+  @Post('/admin')
+  @ApiBearerAuth("access-token")
   create(@Body() userDto: CreateUserDto) {
     return this.usersService.createUser(userDto);
+  }
+
+  // creation superAdmin
+  @ApiOperation({ summary: "super admin creation" })
+  @ApiResponse({ status: 200, type: User })
+  @UsePipes(ValidationPipe)
+  @Roles("SUPERADMIN")
+  @UseGuards(RolesGuard)
+  @Post()
+  @ApiBearerAuth("access-token")
+  createSuperAdmin(@Body() userDto: CreateUserDto) {
+    return this.usersService.createSuperAdmin(userDto);
   }
   //
   @ApiOperation({ summary: "Get all users" })
   @ApiResponse({ status: 200, type: User })
-  @Roles("ADMIN")
-  @UseGuards(RolesGuard)
+  // @Roles("ADMIN")
+  // @UseGuards(RolesGuard)
   @Get()
-  @ApiBearerAuth('access-token') 
+  @ApiBearerAuth("access-token")
   getAll() {
     return this.usersService.getAllUsers();
   }
 
   //ВЫДАТЬ РОЛЬ
   @ApiOperation({ summary: "Выдать роль" })
-  @ApiResponse({ status: 200})
-  @Roles("ADMIN")
+  @ApiResponse({ status: 200 })
+  @Roles("SUPERADMIN")
   @UseGuards(RolesGuard)
-  @Post('/role')
-  @ApiBearerAuth('access-token') 
-  addRole(@Body() dto:AddRoleDto) {
+  @Post("/role")
+  @ApiBearerAuth("access-token")
+  addRole(@Body() dto: AddRoleDto) {
     return this.usersService.addRole(dto);
   }
 
   //Забанить юзера
-  @ApiOperation({ summary: "Забанить юзера" })
-  @ApiResponse({ status: 200})
-  @Roles("ADMIN")
+  @ApiOperation({ summary: "Забанить админа" })
+  @ApiResponse({ status: 200 })
+  @Roles("SUPERADMIN")
   @UseGuards(RolesGuard)
-  @Post('/ban')
-  @ApiBearerAuth('access-token') 
-  banUser(@Body() dto:BanUserDto) {
+  @Post("/ban")
+  @ApiBearerAuth("access-token")
+  banUser(@Body() dto: BanUserDto) {
     return this.usersService.banUser(dto);
   }
   //
@@ -60,13 +90,13 @@ export class UsersController {
   getUserById(@Param("id") id: number) {
     return this.usersService.getUserById(id);
   }
-  
+
   @Delete("/:id")
   deleteUser(@Param("id") id: number) {
     return this.usersService.deleteUserById(id);
   }
   @Put("/:id")
-  updateUser(@Param("id") id: number, @Body() updateUserDto:UpdateUserDto) {
+  updateUser(@Param("id") id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateUser(id, updateUserDto);
   }
 }

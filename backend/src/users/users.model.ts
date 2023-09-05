@@ -2,9 +2,8 @@ import { Model, Table, DataType, Column, BelongsToMany, HasMany } from "sequeliz
 import { ApiProperty } from "@nestjs/swagger";
 import { Role } from "src/roles/roles.model";
 import { UserRoles } from "src/roles/user-roles.model";
-import { Post } from "src/posts/posts.model";
 interface UserCreationAttrs {
-  email: string;
+  login: string;
   password: string;
 }
 @Table({ tableName: "users" })
@@ -17,9 +16,9 @@ export class User extends Model<User, UserCreationAttrs> {
     primaryKey: true,
   })
   id: number;
-  @ApiProperty({ example: "some@email.com", description: "some description" })
+  @ApiProperty({ example: "someLogin123", description: "some description" })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  email: string;
+  login: string;
   @ApiProperty({
     example: "hashedPassword123_",
     description: "some description",
@@ -34,6 +33,4 @@ export class User extends Model<User, UserCreationAttrs> {
   @BelongsToMany(()=> Role, ()=> UserRoles)
   roles:Role[];
 
-  @HasMany(()=> Post)
-  posts:Post[];
 }

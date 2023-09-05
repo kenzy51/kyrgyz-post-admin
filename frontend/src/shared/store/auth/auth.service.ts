@@ -7,7 +7,7 @@ export class AuthService {
     static async signUp(
         payload: SignInType
     ): Promise<AxiosResponse<SignInResponseType>> {
-        const { email, password } = payload;
-        return api.post(AUTH_SIGN_IN, { email, password });
+        const { login, password } = payload;
+        return api.post(AUTH_SIGN_IN, { login, password });
     }
 }

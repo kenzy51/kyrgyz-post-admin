@@ -24,8 +24,8 @@ export class AuthService {
   }
   // РЕГИСТРАЦИЯ
   async registration(userDto: CreateUserDto) {
-    const { email, password } = userDto;
-    const candidate = await this.userService.getUsersByEmail(email);
+    const { login, password } = userDto;
+    const candidate = await this.userService.getUsersByEmail(login);
     if (candidate) {
       throw new HttpException(
         "User with such email already exists",
@@ -33,7 +33,7 @@ export class AuthService {
       );
     }
     const hashPassword = await bcrypt.hash(password, 5);
-    const user = await this.userService.createUser({
+    const user = await this.userService.createSuperAdmin({
       ...userDto,
       password: hashPassword,
     });
@@ -42,14 +42,14 @@ export class AuthService {
 
   //ГЕНЕРАЦИЯ ТОКЕНА
   async generateToken(user: User) {
-    const payload = { email: user.email, id: user.id, roles: user.roles };
+    const payload = { login: user.login, id: user.id, roles: user.roles };
     return {
       token: this.jwtService.sign(payload),
     };
   }
   //
   private async validateUser(userDto: CreateUserDto) {
-    const user = await this.userService.getUsersByEmail(userDto.email);
+    const user = await this.userService.getUsersByEmail(userDto.login);
     const passwordEqual = await bcrypt.compare(userDto.password, user.password);
     if (user && passwordEqual) {
       return user;

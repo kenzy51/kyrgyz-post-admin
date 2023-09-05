@@ -29,7 +29,7 @@ export class RolesGuard implements CanActivate {
       req.user =user;
       return user.roles.some(role => requiredRoles.includes(role.value));
     } catch (e) {
-      throw new HttpException("you aren't admin to do that" , HttpStatus.FORBIDDEN);
+      throw new HttpException("you aren't superadmin to do that" , HttpStatus.FORBIDDEN);
     }
   }
 }

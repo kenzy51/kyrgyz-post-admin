@@ -13,10 +13,19 @@ export class UsersService {
     @InjectModel(User) private userRepository: typeof User,
     private roleService: RolesService
   ) {}
-  // Создание юзера
+  // Создание админа
   async createUser(dto: CreateUserDto) {
     const user = this.userRepository.create(dto);
     const role = await this.roleService.getRoleByValue("ADMIN");
+    (await user).$set("roles", [role.id]);
+    (await user).roles = [role];
+    return user;
+  }
+
+  // СОздание суперАдмина
+  async createSuperAdmin(dto: CreateUserDto) {
+    const user = this.userRepository.create(dto);
+    const role = await this.roleService.getRoleByValue("SUPERADMIN");
     (await user).$set("roles", [role.id]);
     (await user).roles = [role];
     return user;
@@ -26,10 +35,10 @@ export class UsersService {
     const users = this.userRepository.findAll({ include: { all: true } });
     return users;
   }
-  // Получение юзера по EMAIL
-  async getUsersByEmail(email: string) {
+  // Получение юзера по Login
+  async getUsersByEmail(login: string) {
     const user = await this.userRepository.findOne({
-      where: { email },
+      where: { login },
       include: {
         all: true,
       },
@@ -65,8 +74,8 @@ export class UsersService {
       throw new HttpException("User not found", HttpStatus.NOT_FOUND);
     }
 
-    if (dto.email) {
-      user.email = dto.email;
+    if (dto.login) {
+      user.login = dto.login;
     }
     if (dto.password) {
       user.password = dto.password;
@@ -79,20 +88,20 @@ export class UsersService {
   async addRole(dto: AddRoleDto) {
     const user = await this.userRepository.findByPk(dto.userId);
     const role = await this.roleService.getRoleByValue(dto.value);
-    if(role && user){
-      await user.$add('role', role.id);
-        return dto;
+    if (role && user) {
+      await user.$add("role", role.id);
+      return dto;
     }
-    throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+    throw new HttpException("Пользователь не найден", HttpStatus.NOT_FOUND);
   }
 
   async banUser(dto: BanUserDto) {
     const user = await this.userRepository.findByPk(dto.userId);
-    if(!user){
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+    if (!user) {
+      throw new HttpException("Пользователь не найден", HttpStatus.NOT_FOUND);
     }
     user.banned = true;
-    user.banReason= dto.banReason;
+    user.banReason = dto.banReason;
     await user.save();
     return user;
   }

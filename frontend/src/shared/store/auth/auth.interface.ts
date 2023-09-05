@@ -1,5 +1,5 @@
 export interface SignInType {
-    email: string;
+    login: string;
     password: string;
 }
 

@@ -23,8 +23,8 @@ export const SignIn = observer(() => {
 
   const usernameFormItem = (
     <Form.Item
-      name="email"
-      label="Введите email"
+      name="login"
+      label="Введите login"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       style={{ width: "27vw" }}

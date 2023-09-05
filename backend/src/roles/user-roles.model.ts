@@ -3,10 +3,8 @@ import {
   Table,
   DataType,
   Column,
-  BelongsToMany,
   ForeignKey,
 } from "sequelize-typescript";
-import { ApiProperty } from "@nestjs/swagger";
 import { User } from "src/users/users.model";
 import { Role } from "./roles.model";
 

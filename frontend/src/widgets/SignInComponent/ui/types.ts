@@ -1,4 +1,4 @@
 export interface FormValues {
-    email: string;
+    login: string;
     password: string
 }
