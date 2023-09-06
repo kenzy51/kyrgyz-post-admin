@@ -36,7 +36,7 @@ export class UsersService {
     return users;
   }
   // Получение юзера по Login
-  async getUsersByEmail(login: string) {
+  async getUserByLogin(login: string) {
     const user = await this.userRepository.findOne({
       where: { login },
       include: {

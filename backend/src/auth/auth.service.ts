@@ -25,7 +25,7 @@ export class AuthService {
   // РЕГИСТРАЦИЯ
   async registration(userDto: CreateUserDto) {
     const { login, password } = userDto;
-    const candidate = await this.userService.getUsersByEmail(login);
+    const candidate = await this.userService.getUserByLogin(login);
     if (candidate) {
       throw new HttpException(
         "User with such email already exists",
@@ -49,7 +49,7 @@ export class AuthService {
   }
   //
   private async validateUser(userDto: CreateUserDto) {
-    const user = await this.userService.getUsersByEmail(userDto.login);
+    const user = await this.userService.getUserByLogin(userDto.login);
     const passwordEqual = await bcrypt.compare(userDto.password, user.password);
     if (user && passwordEqual) {
       return user;
