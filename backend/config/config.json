@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "kana25",
+    "database": "kyrgyzPost",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "kana25",
+    "database": "kyrgyzPost",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "kana25",
+    "database": "kyrgyzPost",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

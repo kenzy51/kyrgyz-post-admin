@@ -10,9 +10,12 @@ import { AuthModule } from "./auth/auth.module";
 import { MessagesService } from './messages/messages.service';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from "./messages/messages.model";
+import { CourierController } from './courier/courier.controller';
+import { CourierModule } from './courier/courier.module';
+import { Courier } from "./courier/courier.model";
 
 @Module({
-  controllers: [],
+  controllers: [CourierController],
   providers: [],
   imports: [
     ConfigModule.forRoot({
@@ -25,13 +28,14 @@ import { Message } from "./messages/messages.model";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
-      models: [User, Role, UserRoles,Message],
+      models: [User, Role, UserRoles,Message,Courier],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
     MessagesModule,
+    CourierModule,
   ],
 })
 export class AppModule {}

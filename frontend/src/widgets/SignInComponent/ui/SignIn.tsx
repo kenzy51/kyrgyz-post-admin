@@ -5,7 +5,6 @@ import { FormValues } from "./types";
 import styled from "styled-components";
 
 import { useState } from "react";
-import cls from "./SignIn.module.scss";
 
 export const SignIn = observer(() => {
   const [form] = Form.useForm();
@@ -24,7 +23,7 @@ export const SignIn = observer(() => {
   const usernameFormItem = (
     <Form.Item
       name="login"
-      label="Введите login"
+      label="Введите логин"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       style={{ width: "27vw" }}
@@ -45,10 +44,8 @@ export const SignIn = observer(() => {
   const submitButtonFormItem = (
     <Form.Item>
       <Button
-        className={cls.button}
         type="primary"
         htmlType="submit"
-        style={{ background: "linear-gradient(to right, #4437f6, #4c518b3b)" }}
       >
         Войти
       </Button>

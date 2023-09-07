@@ -1,12 +1,12 @@
-import { Table, Button } from "antd";
+import { Table, Button, Tag, Popconfirm } from "antd";
 import React, { useEffect } from "react";
-import { observer } from "mobx-react-lite"; // Import MobX observer
+import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
+import { ReadOutlined } from "@ant-design/icons";
 
 const MessagesComponent = observer(() => {
   const { messages } = messageStore;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +17,7 @@ const MessagesComponent = observer(() => {
       }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 200000);
+    const intervalId = setInterval(fetchData, 200000000);
     return () => {
       clearInterval(intervalId);
     };
@@ -31,9 +31,9 @@ const MessagesComponent = observer(() => {
 
       await MessageApi.makeMessageRead(payload);
       const updatedMessages = messages.map((message) => {
-        // if (message.id === messageId) {
-        //   return { ...message, read: true };
-        // }
+        if (message.id === messageId) {
+          return { ...message, read: true };
+        }
         return message;
       });
       messageStore.messages = updatedMessages;
@@ -49,12 +49,12 @@ const MessagesComponent = observer(() => {
       key: "id",
     },
     {
-      title: "Message",
+      title: "Сообщение",
       dataIndex: "message",
       key: "message",
     },
     {
-      title: "Name",
+      title: "Имя",
       dataIndex: "name",
       key: "name",
     },
@@ -64,14 +64,18 @@ const MessagesComponent = observer(() => {
       key: "address",
     },
     {
-      title: "Прочитано",
+      title: "ОБРАБОТАНО",
       dataIndex: "read",
       key: "read",
       render: (read, record) => (
         <span>
-          {read ? "Yes" : "Нет"}
+          {read ? <Tag color="green">Да</Tag> : <Tag color="red">Нет</Tag>}
           {!read && (
-            <Button onClick={() => makeRead(record.id)}>Сделать прочитанным</Button>
+            <Popconfirm title="ВЫ УВЕРЕНЫ ЧТО ХОТИТЕ ОБРАБОТАТЬ?" onConfirm={() => makeRead(record.id)} cancelText='ОТМЕНА' okText='ДА'  >
+              <Button type="primary">
+                <ReadOutlined />
+              </Button>
+            </Popconfirm>
           )}
         </span>
       ),

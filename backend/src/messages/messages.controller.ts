@@ -21,7 +21,7 @@ export class MessagesController {
     @ApiOperation({ summary: "Назначить сообщение прочитанным" })
     @ApiResponse({ status: 200 })
     @Post("/read")
-    banUser(@Body() dto: MakeMessageReadDto) {
+    makeMessageRead(@Body() dto: MakeMessageReadDto) {
       return this.messageService.makeReadMessage(dto);
     }
 }
