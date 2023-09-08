@@ -20,7 +20,7 @@ export class Courier extends Model<Courier, CouriersCreationAttrs> {
   })
   id: number;
   @ApiProperty({ example: "Fullname", description: "some description" })
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false })
   fullName: string;
   // 
   @ApiProperty({

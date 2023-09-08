@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { CourierService } from './courier.service';
@@ -17,5 +17,9 @@ export class CourierController {
         return this.courierService.getAllCouriers()
     }
 
-
+    @Get("/:id")
+    getUserById(@Param("id") id: number) {
+      return this.courierService.getCourierById(id);
+    }
+    
 }

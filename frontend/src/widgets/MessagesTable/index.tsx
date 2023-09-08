@@ -1,26 +1,61 @@
-import { Table, Button, Tag, Popconfirm } from "antd";
-import React, { useEffect } from "react";
+import {
+  Table,
+  Button,
+  Tag,
+  Popconfirm,
+  notification,
+  Select,
+  Checkbox,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 import { ReadOutlined } from "@ant-design/icons";
+import { regioOptions } from "./consts";
+import { ModalComponent } from "src/shared/ui/ModalMessage/Modal";
+import { SenderModal } from "src/shared/ui/SenderInfo/SenderModal";
 
 const MessagesComponent = observer(() => {
   const { messages } = messageStore;
+  const [currentData, setCurrentData]: any = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys]: any = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  // FOR SENDER INFORMATION
+  const [modalSender, setModalSender] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await MessageApi.getMessages();
         messageStore.messages = response.data;
+        setCurrentData(response.data); // Set current data
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
     };
+
     fetchData();
-    const intervalId = setInterval(fetchData, 200000000);
+
+    const intervalId = setInterval(fetchData, 60000);
     return () => {
       clearInterval(intervalId);
     };
+  }, []);
+
+  useEffect(() => {
+    const newData = messageStore.messages;
+    const addedItems = newData.filter(
+      (item) => !currentData.some((existingItem) => existingItem.id === item.id)
+    );
+
+    if (addedItems.length > 0) {
+      notification.success({
+        message: "НОВОЕ СООБЩЕНИЕ",
+        description: "ВЫ ПОЛУЧИЛИ СООБЩЕНИЕ(ПОСЫЛКУ).",
+      });
+    }
+
+    setCurrentData(newData);
   }, []);
 
   const makeRead = async (messageId) => {
@@ -42,21 +77,58 @@ const MessagesComponent = observer(() => {
     }
   };
 
+  const onSelectChange = (selectedKeys) => {
+    setSelectedRowKeys((prevSelectedKeys) => {
+      const newSelectedKeys = [...prevSelectedKeys, ...selectedKeys];
+      return Array.from(new Set(newSelectedKeys));
+    });
+  };
+  const handleConfirm = async () => {
+    try {
+      const selectedMessageIds = selectedRowKeys.map((key) => key);
+      const updatedMessages = messages.map((message) => {
+        if (selectedMessageIds.includes(message.id)) {
+          return { ...message, read: true };
+        }
+        return message;
+      });
+
+      await MessageApi.makeMessageRead(updatedMessages);
+      messageStore.messages = updatedMessages;
+      setSelectedRowKeys([]);
+      notification.success({
+        message: "Messages Marked as Read",
+        description: "Selected messages have been marked as read.",
+      });
+    } catch (error) {
+      console.error("Error marking messages as read:", error);
+    }
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+    ],
+  };
+
   const columns = [
     {
       title: "ID",
       dataIndex: "id",
       key: "id",
-    },
-    {
-      title: "Сообщение",
-      dataIndex: "message",
-      key: "message",
-    },
-    {
-      title: "Имя",
-      dataIndex: "name",
-      key: "name",
+    }, {
+      title: "Отправитель",
+      dataIndex: "sender",
+      key: "sender",
+      render:()=>(
+        <Button onClick={()=>setModalSender(true)}>
+          Подробнее
+        </Button>
+      )
     },
     {
       title: "Адрес",
@@ -64,26 +136,58 @@ const MessagesComponent = observer(() => {
       key: "address",
     },
     {
-      title: "ОБРАБОТАНО",
+      title: "Кому",
+      dataIndex: "name",
+      key: "name",
+    },
+
+    {
+      title: "Доп информация",
+      dataIndex: "message",
+      key: "message",
+    },
+    {
+      title: "Обработать",
+      dataIndex: "id",
+      key: "id",
+      render: (id) => (
+        <>
+          <Button onClick={() => setModalVisible(true)}>Обработать</Button>
+        </>
+      ),
+    },
+    // {
+    //   title: "Выбрать область",
+    //   dataIndex: "",
+    //   key: "",
+    //   render: (id) => (
+    //     <span>
+
+    //     </span>
+    //   ),
+    // },
+    {
+      title: "Обработано?",
       dataIndex: "read",
       key: "read",
-      render: (read, record) => (
-        <span>
+      render: (read) => (
+        <div className="">
           {read ? <Tag color="green">Да</Tag> : <Tag color="red">Нет</Tag>}
-          {!read && (
-            <Popconfirm title="ВЫ УВЕРЕНЫ ЧТО ХОТИТЕ ОБРАБОТАТЬ?" onConfirm={() => makeRead(record.id)} cancelText='ОТМЕНА' okText='ДА'  >
-              <Button type="primary">
-                <ReadOutlined />
-              </Button>
-            </Popconfirm>
-          )}
-        </span>
+        </div>
       ),
     },
   ];
 
   return (
     <div>
+      <Button type="primary" onClick={handleConfirm}>
+        Подтвердить
+      </Button>
+      <ModalComponent
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+      />
+      <SenderModal visible={modalSender} onCancel={()=>setModalSender(false)} />
       <Table columns={columns} dataSource={messages} rowKey="id" />
     </div>
   );

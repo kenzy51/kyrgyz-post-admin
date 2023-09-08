@@ -4,4 +4,7 @@ export class CandidatesApi {
   static getCandidates() {
     return api.get(COURIERS);
   }
+  static getCourierById(id:number) {
+    return api.get(`${COURIERS}/${id}`);
+  }
 }

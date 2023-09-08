@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Courier } from "./courier.model";
 import { CreateCourierDto } from "./dto/create-courier.dto";
@@ -16,6 +16,19 @@ export class CourierService {
   //
   async getAllCouriers() {
     const courier = this.courierRepository.findAll();
+    return courier;
+  }
+  // GET COURIER BY ID;
+  async getCourierById(id:number){
+    const courier = await this.courierRepository.findOne({
+      where:{id},
+      include:{
+        all:true
+      },
+    })
+    if(!courier){
+      throw new HttpException('Cannot find such courier', HttpStatus.BAD_REQUEST);
+    }
     return courier;
   }
 }
