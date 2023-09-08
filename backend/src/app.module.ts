@@ -7,12 +7,12 @@ import { User } from "./users/users.model";
 import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.model";
 import { AuthModule } from "./auth/auth.module";
-import { MessagesService } from './messages/messages.service';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from "./messages/messages.model";
 import { CourierController } from './courier/courier.controller';
 import { CourierModule } from './courier/courier.module';
 import { Courier } from "./courier/courier.model";
+import { RegionsModule } from './regions/regions.module';
 
 @Module({
   controllers: [CourierController],
@@ -36,6 +36,7 @@ import { Courier } from "./courier/courier.model";
     AuthModule,
     MessagesModule,
     CourierModule,
+    RegionsModule,
   ],
 })
 export class AppModule {}

@@ -12,10 +12,14 @@ export class MessagesService {
     return message;
   }
 //   
+
+
   async getAllMessages() {
     const message = this.messageRepository.findAll();
     return message;
   }
+
+
   async makeReadMessage(dto:MakeMessageReadDto){
     const message = await this.messageRepository.findByPk(dto.messageId)
     if(!message){

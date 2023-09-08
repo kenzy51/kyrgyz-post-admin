@@ -3,10 +3,11 @@ import {
   Table,
   DataType,
   Column,
-  BelongsToMany,
-  HasMany,
+  BelongsTo,
+  ForeignKey,
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
+import { Courier } from "src/courier/courier.model";
 interface MessageCreationAttrs {
   name: string;
   phoneNumber: string;
@@ -52,4 +53,19 @@ export class Message extends Model<Message, MessageCreationAttrs> {
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   read: boolean;
 
+  //
+  @ApiProperty({
+    example: "Chuy or Batken",
+    description: "Selected region shown here",
+  })
+  // 
+  @Column({ type: DataType.STRING, defaultValue: null })
+  region: string;
+  //
+  @ForeignKey(() => Courier) 
+  @Column({ type: DataType.INTEGER }) 
+  courierId: number;
+
+  @BelongsTo(() => Courier)
+  courier: Courier; 
 }

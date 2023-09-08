@@ -1,9 +1,4 @@
-import {
-  Model,
-  Table,
-  DataType,
-  Column,
-} from "sequelize-typescript";
+import { Model, Table, DataType, Column, BelongsTo } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 interface CouriersCreationAttrs {
   fullName: string;
@@ -22,17 +17,20 @@ export class Courier extends Model<Courier, CouriersCreationAttrs> {
   @ApiProperty({ example: "Fullname", description: "some description" })
   @Column({ type: DataType.STRING, allowNull: false })
   fullName: string;
-  // 
+  //
   @ApiProperty({
     example: "phone number",
     description: "some description",
   })
   @Column({ type: DataType.STRING, allowNull: false })
   phoneNumber: string;
+  //
   @ApiProperty({
     example: "true",
-    description:"is candidate accepted to courier or not?"
+    description: "is candidate accepted to courier or not?",
   })
-  @Column({ type: DataType.BOOLEAN, defaultValue:false })
+  @Column({ type: DataType.BOOLEAN, defaultValue: false })
   isAccepted: boolean;
+  //
+ 
 }
