@@ -1,4 +1,4 @@
-export const regioOptions = [
+export const regionOptions = [
     { value: 'chui', label: 'Чуй' },
     { value: 'talas', label: 'Талас' },
     { value: 'issyk', label: 'Иссык-куль' },
