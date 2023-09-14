@@ -7,4 +7,7 @@ export class CandidatesApi {
   static getCourierById(id:number) {
     return api.get(`${COURIERS}/${id}`);
   }
+  static updateCourier(id:number, updateData:any){
+    return api.put(`${COURIERS}/${id}`, updateData)
+  }
 }

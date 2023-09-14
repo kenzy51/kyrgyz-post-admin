@@ -1,21 +1,19 @@
-import { Table, Button, Tag, notification, Select, Checkbox } from "antd";
+import { Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
-import { ReadOutlined } from "@ant-design/icons";
 
 export const ProcessedMessagesComponent = observer(() => {
   const { messages } = messageStore;
   const [currentData, setCurrentData]: any = useState([]);
-  const [selectedRowKeys, setSelectedRowKeys]: any = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await MessageApi.getMessages();
         messageStore.messages = response.data;
-        setCurrentData(response.data); // Set current data
+        setCurrentData(response.data); 
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -28,7 +26,6 @@ export const ProcessedMessagesComponent = observer(() => {
       clearInterval(intervalId);
     };
   }, []);
-
 
   const columns = [
     {
@@ -53,15 +50,74 @@ export const ProcessedMessagesComponent = observer(() => {
       key: "message",
     },
     {
+      title: "Область",
+      dataIndex: "region",
+      key: "region",
+      render: (region) => {
+        let color;
+        switch (region) {
+          case "issyk":
+            color = "blue";
+            break;
+          case "naryn":
+            color = "green";
+            break;
+          case "batken":
+            color = "red";
+            break;
+          case "chui":
+            color = "gold";
+            break;
+          case "osh":
+            color = "purple";
+            break;
+          case "talas":
+            color = "cyan";
+            break;
+          case "djalal":
+            color = "magenta";
+            break;
+          default:
+            color = "default";
+            break;
+        }
+
+        return (
+          <Tag color={color} key={region}>
+            {region === "issyk"
+              ? "Иссык-куль"
+              : region === "naryn"
+              ? "Нарын"
+              : region === "batken"
+              ? "Баткен"
+              : region === "chui"
+              ? "Чуй"
+              : region === "osh"
+              ? "Ош"
+              : region === "talas"
+              ? "Талас"
+              : region === "djalal"
+              ? "Джалал-абад"
+              : ""}
+          </Tag>
+        );
+      },
+    },
+    {
       title: "КУРЬЕР",
       dataIndex: "courier",
       key: "courier",
+      render: (courier) => (
+        <div className="">
+          {courier ? <h4>{courier?.fullName}</h4> : "Отсутствует курьер"}
+        </div>
+      ),
     },
   ];
 
   return (
     <div>
-        <h1>ОБРАБОТАННЫЕ СООБЩЕНИЯ</h1>
+      <h1>ОБРАБОТАННЫЕ СООБЩЕНИЯ</h1>
       <Table columns={columns} dataSource={messages} rowKey="id" />
     </div>
   );

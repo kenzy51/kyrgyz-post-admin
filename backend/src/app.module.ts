@@ -13,6 +13,8 @@ import { CourierController } from './courier/courier.controller';
 import { CourierModule } from './courier/courier.module';
 import { Courier } from "./courier/courier.model";
 import { RegionsModule } from './regions/regions.module';
+import { PartnershipModule } from './partnership/partnership.module';
+import { Partner } from "./partnership/partner.model";
 
 @Module({
   controllers: [CourierController],
@@ -28,7 +30,7 @@ import { RegionsModule } from './regions/regions.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
-      models: [User, Role, UserRoles,Message,Courier],
+      models: [User, Role, UserRoles,Message,Courier,Partner],
       autoLoadModels: true,
     }),
     UsersModule,
@@ -37,6 +39,7 @@ import { RegionsModule } from './regions/regions.module';
     MessagesModule,
     CourierModule,
     RegionsModule,
+    PartnershipModule,
   ],
 })
 export class AppModule {}

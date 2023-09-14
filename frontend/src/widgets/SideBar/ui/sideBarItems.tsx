@@ -23,5 +23,5 @@ export const items: MenuItem[] = [
   getItem(<Link to="/">Главная</Link>, "1", <HomeOutlined />),
   getItem(<Link to="/messages">Непрочитанные</Link>, "2",<ReadOutlined />),
   getItem(<Link to="/processed">Обработанные сообщения</Link>, "3",<ReadOutlined />),
- 
+  getItem(<Link to="/createMessage">Создать сообщение</Link>, "4",<ReadOutlined />),
 ];

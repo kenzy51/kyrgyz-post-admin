@@ -141,18 +141,21 @@ const MessagesComponent = observer(() => {
       title: "Обработать",
       dataIndex: "id",
       key: "id",
-      render: (id) => (
-        <>
-          <Button
-            onClick={() => {
-              setSelectedItemId(id);
-              setModalVisible(true);
-            }}
-          >
-            Обработать
-          </Button>
-        </>
-      ),
+      render: (id) => {
+        return (
+          <>
+              <Button
+                onClick={() => {
+                  setSelectedItemId(id);
+                  setModalVisible(true);
+                }}
+              >
+                Обработать
+              </Button>
+          </>
+        );
+      },
+      
     },
     {
       title: "Обработано?",

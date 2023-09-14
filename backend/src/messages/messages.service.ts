@@ -33,6 +33,7 @@ export class MessagesService {
     return message;
   }
 
+  // UPDATE SERVICE 
   async updateMessage(id: number, dto: UpdateMessageDto) {
     const message = await this.messageRepository.findOne({ where: { id } });
     if (!message) {
@@ -56,8 +57,11 @@ export class MessagesService {
     if (dto.courierId) {
       message.courierId = dto.courierId;
     }
-
+    message.read = true;
     await message.save();
     return message
   }
+
+
+  
 }
