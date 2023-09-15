@@ -2,19 +2,13 @@ import {
   Table,
   Button,
   Tag,
-  Popconfirm,
   notification,
-  Select,
-  Checkbox,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
-import { ReadOutlined } from "@ant-design/icons";
 import { ModalComponent } from "src/shared/ui/ModalMessage/Modal";
-import { SenderModal } from "src/shared/ui/SenderInfo/SenderModal";
-import axios, { Axios } from "axios";
 
 const MessagesComponent = observer(() => {
   const { messages } = messageStore;
@@ -60,31 +54,6 @@ const MessagesComponent = observer(() => {
     setCurrentData(newData);
   }, []);
 
-  const makeRead = async (messageId) => {
-    try {
-      const payload = {
-        messageId: messageId,
-      };
-
-      await MessageApi.makeMessageRead(payload);
-      const updatedMessages = messages.map((message) => {
-        if (message.id === messageId) {
-          return { ...message, read: true };
-        }
-        return message;
-      });
-      messageStore.messages = updatedMessages;
-    } catch (error) {
-      console.error("Error marking message as read:", error);
-    }
-  };
-
-  const onSelectChange = (selectedKeys) => {
-    setSelectedRowKeys((prevSelectedKeys) => {
-      const newSelectedKeys = [...prevSelectedKeys, ...selectedKeys];
-      return Array.from(new Set(newSelectedKeys));
-    });
-  };
   const handleConfirm = async () => {
     try {
       const selectedMessageIds = selectedRowKeys.map((key) => key);
@@ -107,6 +76,7 @@ const MessagesComponent = observer(() => {
     }
   };
 
+  const filteredMessages = messages.filter((m:any)=>(!m.read))
   const columns = [
     {
       title: "ID",
@@ -179,8 +149,7 @@ const MessagesComponent = observer(() => {
         onCancel={() => setModalVisible(false)}
         selectedItemId={selectedItemId}
       />
-      {/* <SenderModal visible={modalSender} onCancel={()=>setModalSender(false)} /> */}
-      <Table columns={columns} dataSource={messages} rowKey="id" />
+      <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
     </div>
   );
 });

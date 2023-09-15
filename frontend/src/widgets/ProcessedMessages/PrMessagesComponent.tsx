@@ -26,7 +26,7 @@ export const ProcessedMessagesComponent = observer(() => {
       clearInterval(intervalId);
     };
   }, []);
-
+  const filteredMessages = messages.filter((m)=> m.read)
   const columns = [
     {
       title: "ID",
@@ -118,7 +118,7 @@ export const ProcessedMessagesComponent = observer(() => {
   return (
     <div>
       <h1>ОБРАБОТАННЫЕ СООБЩЕНИЯ</h1>
-      <Table columns={columns} dataSource={messages} rowKey="id" />
+      <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
     </div>
   );
 });

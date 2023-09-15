@@ -20,7 +20,6 @@ const App = observer(() => {
           <Content style={{ margin: "0 16px", maxHeight: "90vh " }}>
             <AppRouter />
           </Content>
-          {/* <Footer style={{ textAlign: "center", height: "10%" }}>Runita</Footer> */}
         </Layout>
       </Layout>
     </div>

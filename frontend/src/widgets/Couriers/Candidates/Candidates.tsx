@@ -18,12 +18,15 @@ export const Candidates = () => {
       }
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 200000000);
+    const intervalId = setInterval(fetchData, 20000000);
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
+  const filteredCandidates = candidates.filter(
+    (candidate: any) => !candidate?.isAccepted
+  );
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -84,7 +87,7 @@ export const Candidates = () => {
       title: "Оформить на работу",
       dataIndex: "",
       key: "",
-      render: (id:any) => (
+      render: (id: any) => (
         <div className="">
           <Button
             type="primary"
@@ -102,8 +105,13 @@ export const Candidates = () => {
 
   return (
     <div>
-      <Table dataSource={candidates} columns={columns} />
-      <CandidateModal onCancel={() => setVisible(false)} visible={visible} selectedId={selectedItemId} />
+      <h2>Список непринятых на работу курьеров(кандидаты)</h2>
+      <Table dataSource={filteredCandidates} columns={columns} />
+      <CandidateModal
+        onCancel={() => setVisible(false)}
+        visible={visible}
+        selectedId={selectedItemId}
+      />
     </div>
   );
 };

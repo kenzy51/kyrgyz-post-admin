@@ -50,4 +50,17 @@ export class UpdateCourierDto extends CreateCourierDto {
     description: "Место последней работы",
   })
   readonly lastWork?: string;
+  //
+  @ApiProperty({
+    example: "image.png",
+    description: "image of this",
+  })
+  readonly image?: string;
+
+  //
+  @ApiProperty({
+    example: 'false',
+    description: "срочный ли курьер",
+  })
+  readonly isUrgent?: boolean;
 }

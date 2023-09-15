@@ -109,4 +109,18 @@ export class Courier extends Model<Courier, CouriersCreationAttrs> {
   })
   @Column({ type: DataType.STRING })
   lastWork: string;
+// 
+  @ApiProperty({
+    example: "image.png",
+    description: "ФОТОГРАФИЯ",
+  })
+  @Column({ type: DataType.STRING })
+  image: string;
+// 
+  @ApiProperty({
+    example:'false',
+    description:'срочный ли курьер'
+  })
+  @Column({type:DataType.BOOLEAN})
+  isUrgent:boolean;
 }

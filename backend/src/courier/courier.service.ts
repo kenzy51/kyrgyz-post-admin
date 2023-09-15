@@ -19,15 +19,18 @@ export class CourierService {
     return courier;
   }
   // GET COURIER BY ID;
-  async getCourierById(id:number){
+  async getCourierById(id: number) {
     const courier = await this.courierRepository.findOne({
-      where:{id},
-      include:{
-        all:true
+      where: { id },
+      include: {
+        all: true,
       },
-    })
-    if(!courier){
-      throw new HttpException('Cannot find such courier', HttpStatus.BAD_REQUEST);
+    });
+    if (!courier) {
+      throw new HttpException(
+        "Cannot find such courier",
+        HttpStatus.BAD_REQUEST
+      );
     }
     return courier;
   }
@@ -35,7 +38,7 @@ export class CourierService {
   async updateCourier(id: number, updateDto: UpdateCourierDto) {
     const courier = await this.courierRepository.findOne({ where: { id } });
     if (!courier) {
-      throw new HttpException('Courier not found', HttpStatus.NOT_FOUND);
+      throw new HttpException("Courier not found", HttpStatus.NOT_FOUND);
     }
     if (updateDto.fullName) {
       courier.fullName = updateDto.fullName;
@@ -79,7 +82,16 @@ export class CourierService {
     if (updateDto.lastWork) {
       courier.lastWork = updateDto.lastWork;
     }
-    courier.isAccepted= true;
+    if (updateDto.image) {
+      courier.image = updateDto.image;
+    }
+    if (updateDto.isUrgent !== undefined) {
+      courier.isUrgent = updateDto.isUrgent;
+    } else {
+      courier.isUrgent = false;
+    }
+    courier.isAccepted = true;
+      
     await courier.save();
 
     return courier;

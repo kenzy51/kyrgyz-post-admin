@@ -1,17 +1,19 @@
 import { Tabs, TabsProps } from "antd";
-import { Candidates } from "src/widgets/Candidates/Candidates";
+import { Candidates } from "src/widgets/Couriers/Candidates/Candidates";
+import { NotUrgentCouriers } from "src/widgets/Couriers/NotUrgentCouriers/NotUrgentCouriers";
+import { UrgentCouriers } from "src/widgets/Couriers/UrgentCouriers/UrgentCouriers";
 
 export const MainPage = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "СРОЧНЫЕ",
-      children: "Content of Tab Pane 1",
+      children: <UrgentCouriers/>,
     },
     {
       key: "2",
       label: "НЕСРОЧНЫЕ",
-      children: "Content of Tab Pane 2",
+      children: <NotUrgentCouriers/>,
     },
     {
       key: "3",

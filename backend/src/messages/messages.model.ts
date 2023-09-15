@@ -8,12 +8,14 @@ import {
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { Courier } from "src/courier/courier.model";
+import { ISender } from "./types/types";
 interface MessageCreationAttrs {
   name: string;
   phoneNumber: string;
   message: string;
   address: string;
 }
+
 @Table({ tableName: "messages" })
 export class Message extends Model<Message, MessageCreationAttrs> {
   @ApiProperty({ example: "1", description: "Уникальный идентификатор" })
@@ -58,14 +60,25 @@ export class Message extends Model<Message, MessageCreationAttrs> {
     example: "Chuy or Batken",
     description: "Selected region shown here",
   })
-  // 
+  //
   @Column({ type: DataType.STRING, defaultValue: null })
   region: string;
   //
-  @ForeignKey(() => Courier) 
-  @Column({ type: DataType.INTEGER }) 
+
+  @ApiProperty({
+    example: "Айба отпраавитель",
+    description: "Who sent message",
+  })
+  //
+  @Column({ type: DataType.JSON, defaultValue: null })
+  sender?: ISender;
+  //
+
+  //
+  @ForeignKey(() => Courier)
+  @Column({ type: DataType.INTEGER })
   courierId: number;
 
   @BelongsTo(() => Courier)
-  courier: Courier; 
+  courier: Courier;
 }
