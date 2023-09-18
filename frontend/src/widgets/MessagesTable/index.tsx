@@ -1,14 +1,10 @@
-import {
-  Table,
-  Button,
-  Tag,
-  notification,
-} from "antd";
+import { Table, Button, Tag, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 import { ModalComponent } from "src/shared/ui/ModalMessage/Modal";
+import { SenderModal } from "src/shared/ui/SenderInfo/SenderModal";
 
 const MessagesComponent = observer(() => {
   const { messages } = messageStore;
@@ -76,7 +72,8 @@ const MessagesComponent = observer(() => {
     }
   };
 
-  const filteredMessages = messages.filter((m:any)=>(!m.read))
+  const filteredMessages = messages.filter((m: any) => !m.read);
+
   const columns = [
     {
       title: "ID",
@@ -114,18 +111,17 @@ const MessagesComponent = observer(() => {
       render: (id) => {
         return (
           <>
-              <Button
-                onClick={() => {
-                  setSelectedItemId(id);
-                  setModalVisible(true);
-                }}
-              >
-                Обработать
-              </Button>
+            <Button
+              onClick={() => {
+                setSelectedItemId(id);
+                setModalVisible(true);
+              }}
+            >
+              Обработать
+            </Button>
           </>
         );
       },
-      
     },
     {
       title: "Обработано?",
@@ -150,6 +146,10 @@ const MessagesComponent = observer(() => {
         selectedItemId={selectedItemId}
       />
       <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
+      <SenderModal
+        visible={modalSender}
+        onCancel={() => setModalSender(false)}
+      />
     </div>
   );
 });

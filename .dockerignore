@@ -1,0 +1,30 @@
+# Files and directories to exclude from the Docker image build
+
+# Node.js dependencies
+node_modules
+
+# Development and build artifacts
+npm-debug.log
+yarn-error.log
+dist/
+build/
+coverage/
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment files (e.g., .env for environment variables)
+.env
+
+# Logs
+logs/
+*.log
+
+# Dependency management files (e.g., package-lock.json, yarn.lock)
+package-lock.json
+yarn.lock
