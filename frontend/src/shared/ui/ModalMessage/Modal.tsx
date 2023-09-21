@@ -66,7 +66,7 @@ export const ModalComponent = ({ visible, onCancel, selectedItemId }) => {
       key:"isUrgent",
       render:(isUrgent)=>(
         <div className="">
-          {isUrgent ? <Tag color="orange">Срочный</Tag> : <Tag color="blue">Несрочный</Tag>}
+          {isUrgent ? <Tag color="red">Срочный</Tag> : <Tag color="yellow">Несрочный</Tag>}
         </div>
       )
     }

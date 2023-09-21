@@ -16,6 +16,7 @@ const fieldLabels = {
   dateOfGivenPassport: "Дата выдачи паспорта",
   citizenShip: "Гражданство",
   lastWork: "Последнее место работы",
+  placeOfService: "Район обслуживания",
 };
 
 export const CandidateModal = observer(
@@ -79,6 +80,7 @@ export const CandidateModal = observer(
             "dateOfGivenPassport",
             "citizenShip",
             "lastWork",
+            "placeOfService"
           ].map((field) => (
             <Form.Item key={field} name={field} label={fieldLabels[field]}>
               <Input />

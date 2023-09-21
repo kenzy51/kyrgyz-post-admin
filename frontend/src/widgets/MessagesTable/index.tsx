@@ -15,6 +15,9 @@ const MessagesComponent = observer(() => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   // FOR SENDER INFORMATION
   const [modalSender, setModalSender] = useState(false);
+  const [senderData, setSenderData]: any = useState(null); // Store sender data
+  //
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,18 +79,11 @@ const MessagesComponent = observer(() => {
 
   const columns = [
     {
-      title: "ID",
+      title: "ID сообщения",
       dataIndex: "id",
       key: "id",
     },
-    {
-      title: "Отправитель",
-      dataIndex: "sender",
-      key: "sender",
-      render: () => (
-        <Button onClick={() => setModalSender(true)}>Подробнее</Button>
-      ),
-    },
+
     {
       title: "Адрес",
       dataIndex: "address",
@@ -98,12 +94,17 @@ const MessagesComponent = observer(() => {
       dataIndex: "name",
       key: "name",
     },
-
     {
       title: "Доп информация",
       dataIndex: "message",
       key: "message",
     },
+    {
+      title: "Габарит",
+      dataIndex: "size",
+      key: "size",
+    },
+
     {
       title: "Обработать",
       dataIndex: "id",
@@ -133,6 +134,21 @@ const MessagesComponent = observer(() => {
         </div>
       ),
     },
+    {
+      title: "Отправитель",
+      dataIndex: "sender",
+      key: "sender",
+      render: (sender) => (
+        <Button
+          onClick={() => {
+            setSenderData(sender);
+            setModalSender(true);
+          }}
+        >
+          Подробнее
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -149,6 +165,7 @@ const MessagesComponent = observer(() => {
       <SenderModal
         visible={modalSender}
         onCancel={() => setModalSender(false)}
+        sender={senderData}
       />
     </div>
   );
