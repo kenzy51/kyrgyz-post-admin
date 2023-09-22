@@ -7,9 +7,8 @@ import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 export const ProcessedMessagesComponent = observer(() => {
   const { messages } = messageStore;
   const [currentData, setCurrentData]: any = useState([]);
-  const [searchText, setSearchText] = useState(""); // State for search input
+  const [searchText, setSearchText] = useState(""); 
 
-  // ... Rest of your code ...
 
   const handleSearch = (value) => {
     setSearchText(value);

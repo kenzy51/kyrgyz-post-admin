@@ -4,6 +4,7 @@ import { MainPage } from "src/pages/MainPage";
 import { MessagePage } from "src/pages/MessagePage";
 import { NotFoundPage } from "src/pages/NotFoundPage";
 import { ProcessedMessagesPage } from "src/pages/OperatedMessages";
+import { PartnershipPage } from "src/pages/PartnershipPage";
 import { SignInPage } from "src/pages/SignInPage/ui/SignInPage";
 
 export enum AppRoutes {
@@ -12,12 +13,14 @@ export enum AppRoutes {
   NOT_FOUND = "NOT_FOUND",
   PROCESSED_MESSAGES = "PROCESSED_MESSAGES",
   CREAETE_MESSAGE = "CREATE_MESSAGE",
+  PARTNERSHIP = "PARTNERSHIP",
 }
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
   [AppRoutes.MESSAGES]: "/messages",
   [AppRoutes.PROCESSED_MESSAGES]: "/processed",
   [AppRoutes.CREAETE_MESSAGE]: "/createMessage",
+  [AppRoutes.PARTNERSHIP]: "/partnership",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -41,6 +44,10 @@ export const routeConfigPrivate: Record<AppRoutes, RouteProps> = {
   [AppRoutes.CREAETE_MESSAGE]: {
     path: RoutePath.CREATE_MESSAGE,
     element: <CreateMessagePage />,
+  }, 
+  [AppRoutes.PARTNERSHIP]: {
+    path: RoutePath.PARTNERSHIP,
+    element: <PartnershipPage />,
   },
 };
 
