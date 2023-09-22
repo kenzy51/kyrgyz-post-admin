@@ -63,4 +63,13 @@ export class UpdateCourierDto extends CreateCourierDto {
     description: "срочный ли курьер",
   })
   readonly isUrgent?: boolean;
+
+  //
+  @ApiProperty({
+    example: 'Chuy',
+    description: "Регион сервиса",
+  })
+  readonly regionOfService?: string;
+
+
 }

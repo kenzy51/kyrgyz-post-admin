@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Button, Input } from "antd";
+import { Modal, Form, Button, Input, Select } from "antd";
 import { CandidatesApi } from "src/shared/store/candidates/api/candidatesApi";
 import { observer } from "mobx-react-lite";
 import { candidateStore } from "src/shared/store/candidates/service/candidateStore";
@@ -16,12 +16,21 @@ const fieldLabels = {
   dateOfGivenPassport: "Дата выдачи паспорта",
   citizenShip: "Гражданство",
   lastWork: "Последнее место работы",
+  regionOfService: "Район обслуживания",
 };
-
+const regionOptions = [
+  "Чуй",
+  "Ош",
+  "Баткен",
+  "Иссык-куль",
+  "Нарын",
+  "Джалал-абад",
+  "Талас",
+];
 export const CandidateModal = observer(
   ({ visible, onCancel, selectedId }: any) => {
     const [form] = Form.useForm();
-    const{selectedCourier}= candidateStore;
+    const { selectedCourier } = candidateStore;
     const onFinish = async (values) => {
       try {
         await candidateStore.updateCourier(selectedId?.id, values);
@@ -45,7 +54,6 @@ export const CandidateModal = observer(
       }
     }, [selectedId]);
 
-    
     return (
       <Modal
         width={900}
@@ -85,6 +93,15 @@ export const CandidateModal = observer(
             </Form.Item>
           ))}
 
+          <Form.Item name="placeOfService" label={fieldLabels.regionOfService}>
+            <Select>
+              {regionOptions.map((region) => (
+                <Select.Option key={region} value={region}>
+                  {region}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Button htmlType="submit">Сохранить</Button>
         </Form>
       </Modal>

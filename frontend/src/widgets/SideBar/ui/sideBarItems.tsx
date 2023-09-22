@@ -1,6 +1,7 @@
 import { MenuProps } from "antd";
 import { Link } from "react-router-dom";
 import {
+  CommentOutlined,
   HomeOutlined,
   ReadOutlined
 } from "@ant-design/icons";
@@ -24,4 +25,5 @@ export const items: MenuItem[] = [
   getItem(<Link to="/messages">Непрочитанные</Link>, "2",<ReadOutlined />),
   getItem(<Link to="/processed">Обработанные сообщения</Link>, "3",<ReadOutlined />),
   getItem(<Link to="/createMessage">Создать сообщение</Link>, "4",<ReadOutlined />),
+  getItem(<Link to="/partnership">Заявки на партнерство</Link>, "5",<CommentOutlined />),
 ];

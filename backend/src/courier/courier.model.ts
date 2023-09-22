@@ -117,10 +117,17 @@ export class Courier extends Model<Courier, CouriersCreationAttrs> {
   @Column({ type: DataType.STRING })
   image: string;
 // 
-  @ApiProperty({
-    example:'false',
-    description:'срочный ли курьер'
-  })
-  @Column({type:DataType.BOOLEAN})
-  isUrgent:boolean;
+@ApiProperty({
+  example:'false',
+  description:'срочный ли курьер'
+})
+@Column({type:DataType.BOOLEAN})
+isUrgent:boolean;
+// 
+@ApiProperty({
+  example:'Chuy',
+  description:'Регион сервиса'
+})
+@Column({type:DataType.STRING})
+regionOfService:string;
 }

@@ -1,14 +1,10 @@
-import {
-  Table,
-  Button,
-  Tag,
-  notification,
-} from "antd";
+import { Table, Button, Tag, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 import { ModalComponent } from "src/shared/ui/ModalMessage/Modal";
+import { SenderModal } from "src/shared/ui/SenderInfo/SenderModal";
 
 const MessagesComponent = observer(() => {
   const { messages } = messageStore;
@@ -19,6 +15,9 @@ const MessagesComponent = observer(() => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   // FOR SENDER INFORMATION
   const [modalSender, setModalSender] = useState(false);
+  const [senderData, setSenderData]: any = useState(null); // Store sender data
+  //
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,21 +75,15 @@ const MessagesComponent = observer(() => {
     }
   };
 
-  const filteredMessages = messages.filter((m:any)=>(!m.read))
+  const filteredMessages = messages.filter((m: any) => !m.read);
+
   const columns = [
     {
-      title: "ID",
+      title: "ID сообщения",
       dataIndex: "id",
       key: "id",
     },
-    {
-      title: "Отправитель",
-      dataIndex: "sender",
-      key: "sender",
-      render: () => (
-        <Button onClick={() => setModalSender(true)}>Подробнее</Button>
-      ),
-    },
+
     {
       title: "Адрес",
       dataIndex: "address",
@@ -101,12 +94,17 @@ const MessagesComponent = observer(() => {
       dataIndex: "name",
       key: "name",
     },
-
     {
       title: "Доп информация",
       dataIndex: "message",
       key: "message",
     },
+    {
+      title: "Габарит",
+      dataIndex: "size",
+      key: "size",
+    },
+
     {
       title: "Обработать",
       dataIndex: "id",
@@ -114,18 +112,17 @@ const MessagesComponent = observer(() => {
       render: (id) => {
         return (
           <>
-              <Button
-                onClick={() => {
-                  setSelectedItemId(id);
-                  setModalVisible(true);
-                }}
-              >
-                Обработать
-              </Button>
+            <Button
+              onClick={() => {
+                setSelectedItemId(id);
+                setModalVisible(true);
+              }}
+            >
+              Обработать
+            </Button>
           </>
         );
       },
-      
     },
     {
       title: "Обработано?",
@@ -135,6 +132,21 @@ const MessagesComponent = observer(() => {
         <div className="">
           {read ? <Tag color="green">Да</Tag> : <Tag color="red">Нет</Tag>}
         </div>
+      ),
+    },
+    {
+      title: "Отправитель",
+      dataIndex: "sender",
+      key: "sender",
+      render: (sender) => (
+        <Button
+          onClick={() => {
+            setSenderData(sender);
+            setModalSender(true);
+          }}
+        >
+          Подробнее
+        </Button>
       ),
     },
   ];
@@ -150,6 +162,11 @@ const MessagesComponent = observer(() => {
         selectedItemId={selectedItemId}
       />
       <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
+      <SenderModal
+        visible={modalSender}
+        onCancel={() => setModalSender(false)}
+        sender={senderData}
+      />
     </div>
   );
 });

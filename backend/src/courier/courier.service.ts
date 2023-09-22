@@ -85,13 +85,16 @@ export class CourierService {
     if (updateDto.image) {
       courier.image = updateDto.image;
     }
+    if (updateDto.regionOfService) {
+      courier.regionOfService = updateDto.regionOfService;
+    }
     if (updateDto.isUrgent !== undefined) {
       courier.isUrgent = updateDto.isUrgent;
     } else {
       courier.isUrgent = false;
     }
     courier.isAccepted = true;
-      
+
     await courier.save();
 
     return courier;

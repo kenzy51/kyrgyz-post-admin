@@ -1,4 +1,4 @@
-import { Table, Tag } from "antd";
+import { Input, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
@@ -7,13 +7,19 @@ import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 export const ProcessedMessagesComponent = observer(() => {
   const { messages } = messageStore;
   const [currentData, setCurrentData]: any = useState([]);
+  const [searchText, setSearchText] = useState(""); 
+
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await MessageApi.getMessages();
         messageStore.messages = response.data;
-        setCurrentData(response.data); 
+        setCurrentData(response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -26,7 +32,17 @@ export const ProcessedMessagesComponent = observer(() => {
       clearInterval(intervalId);
     };
   }, []);
-  const filteredMessages = messages.filter((m)=> m.read)
+  const filteredMessages = messages.filter((m) => {
+    // Check if the message is read
+    if (!m.read) return false;
+  
+    // Check if 'id' and 'fullname' properties exist and include the searchText
+    const idIncludesSearchText = m.id && m.id.toString().includes(searchText);
+    const fullnameIncludesSearchText = m.fullname && m.fullname.includes(searchText);
+  
+    // Include the message in the filtered list if either condition is true
+    return idIncludesSearchText || fullnameIncludesSearchText;
+  });
   const columns = [
     {
       title: "ID",
@@ -118,6 +134,12 @@ export const ProcessedMessagesComponent = observer(() => {
   return (
     <div>
       <h1>ОБРАБОТАННЫЕ СООБЩЕНИЯ</h1>
+      <Input
+        placeholder="Введите ID или Кому"
+        value={searchText}
+        onChange={(e) => handleSearch(e.target.value)}
+        style={{ marginBottom: 16 }}
+      />
       <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
     </div>
   );
