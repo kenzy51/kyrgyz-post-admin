@@ -18,6 +18,13 @@ export class MessagesController {
     return this.messageService.getAllMessages();
   }
 
+  @ApiOperation({ summary: "Получить сообщение по ID" })
+  // 
+  @Get(":/id")
+  getById(@Param("id") id:number){
+    return this.messageService.getMessageById(id)
+  }
+
   @ApiOperation({ summary: "Назначить сообщение прочитанным" })
   @ApiResponse({ status: 200 })
   @Post("/read")

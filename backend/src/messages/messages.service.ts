@@ -16,6 +16,23 @@ export class MessagesService {
   }
   //
 
+  async getMessageById(id: number) {
+    const message = await this.messageRepository.findOne({
+      where: { id },
+      include: {
+        all: true,
+      },
+    });
+    if (!message) {
+      throw new HttpException(
+        "Cannot find such message",
+        HttpStatus.BAD_REQUEST
+      );
+    }
+    return message;
+  }
+  
+  //
   async getAllMessages() {
     const message = this.messageRepository.findAll({
       include: Courier,
@@ -33,7 +50,7 @@ export class MessagesService {
     return message;
   }
 
-  // UPDATE SERVICE 
+  // UPDATE SERVICE
   async updateMessage(id: number, dto: UpdateMessageDto) {
     const message = await this.messageRepository.findOne({ where: { id } });
     if (!message) {
@@ -59,9 +76,6 @@ export class MessagesService {
     }
     message.read = true;
     await message.save();
-    return message
+    return message;
   }
-
-
-  
 }
