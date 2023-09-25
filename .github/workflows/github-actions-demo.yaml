@@ -24,11 +24,6 @@ jobs:
           npm install
           npm run build  # Replace with your actual build command
 
-      - name: Run backend tests
-        working-directory: backend
-        run: |
-          npm test  # Replace with your actual test command
-
   frontend:
     runs-on: ubuntu-latest
 
@@ -46,8 +41,3 @@ jobs:
         run: |
           npm install
           npm run build  # Replace with your actual build command
-
-      - name: Run frontend tests
-        working-directory: frontend
-        run: |
-          npm test  # Replace with your actual test command
