@@ -39,5 +39,5 @@ jobs:
       - name: Install frontend dependencies and build
         working-directory: frontend
         run: |
-          npm install
+          npm install --force
           npm run build  # Replace with your actual build command
