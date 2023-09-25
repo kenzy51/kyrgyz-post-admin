@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Modal, Form, Button, Input, Select } from "antd";
-import { CandidatesApi } from "src/shared/store/candidates/api/candidatesApi";
 import { observer } from "mobx-react-lite";
 import { candidateStore } from "src/shared/store/candidates/service/candidateStore";
 

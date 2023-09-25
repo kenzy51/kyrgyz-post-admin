@@ -1,7 +1,6 @@
 import React from "react";
 import { Table } from "antd";
 import { observer } from "mobx-react-lite";
-import { partnerStore } from "src/shared/store/partnership/service/partnershipStore";
 import { PartnerApi } from "src/shared/store/partnership/api/partnershipApi";
 
 export const PartnershipPage = observer(() => {
