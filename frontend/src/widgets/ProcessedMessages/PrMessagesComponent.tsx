@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Input, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
