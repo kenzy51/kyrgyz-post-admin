@@ -20,7 +20,7 @@ export class MessagesController {
 
   @ApiOperation({ summary: "Получить сообщение по ID" })
   // 
-  @Get(":/id")
+  @Get("/:id")
   getById(@Param("id") id:number){
     return this.messageService.getMessageById(id)
   }
