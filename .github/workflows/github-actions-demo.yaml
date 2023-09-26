@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2  # Use the appropriate version
+        uses: actions/checkout@v2 
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18  # You can specify the Node.js version you need
+          node-version: 18  
 
       - name: Install dependencies and build backend
         working-directory: backend
@@ -29,12 +29,12 @@ jobs:
 
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2  # Use the appropriate version
+        uses: actions/checkout@v2  
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18  # You can specify the Node.js version you need
+          node-version: 18 
 
       - name: Install frontend dependencies and build
         working-directory: frontend

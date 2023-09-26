@@ -8,8 +8,7 @@ import { MessageApi } from "src/shared/store/messages/api/messagesApi";
 export const ProcessedMessagesComponent = observer(() => {
   const { messages } = messageStore;
   const [setCurrentData]: any = useState([]);
-  const [searchText, setSearchText] = useState(""); 
-
+  const [searchText, setSearchText] = useState("");
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -36,11 +35,12 @@ export const ProcessedMessagesComponent = observer(() => {
   const filteredMessages = messages.filter((m) => {
     // Check if the message is read
     if (!m.read) return false;
-  
+
     // Check if 'id' and 'fullname' properties exist and include the searchText
     const idIncludesSearchText = m.id && m.id.toString().includes(searchText);
-    const fullnameIncludesSearchText = m.fullname && m.fullname.includes(searchText);
-  
+    const fullnameIncludesSearchText =
+      m.fullname && m.fullname.includes(searchText);
+
     // Include the message in the filtered list if either condition is true
     return idIncludesSearchText || fullnameIncludesSearchText;
   });
@@ -136,7 +136,7 @@ export const ProcessedMessagesComponent = observer(() => {
     <div>
       <h1>ОБРАБОТАННЫЕ СООБЩЕНИЯ</h1>
       <Input
-        placeholder="Введите ID или Кому"
+        placeholder="Введите ID"
         value={searchText}
         onChange={(e) => handleSearch(e.target.value)}
         style={{ marginBottom: 16 }}

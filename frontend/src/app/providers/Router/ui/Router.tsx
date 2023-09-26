@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-
-import { authStore } from 'src/shared/store/auth/auth.store'
+import { authStore } from 'src/shared/store/auth/auth.store';
 import styled from "styled-components";
 import { routeConfigPrivate, routeConfigPublic } from "../routerConfig";
 import { LoadingOutlined } from "@ant-design/icons";
