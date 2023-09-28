@@ -14,13 +14,17 @@ import { User } from "src/users/users.model";
 export class AuthService {
   constructor(
     private userService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
   // ЛОГИН
 
   async login(userDto: CreateUserDto) {
     const user = await this.validateUser(userDto);
-    return this.generateToken(user);
+    const token = this.generateToken(user);
+    return{
+      token:(await token).token,
+      userId: user.id
+    }
   }
   // РЕГИСТРАЦИЯ
   async registration(userDto: CreateUserDto) {

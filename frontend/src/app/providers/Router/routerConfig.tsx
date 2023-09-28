@@ -1,4 +1,5 @@
 import { RouteProps } from "react-router";
+import { AboutSelf } from "src/pages/AboutSelf";
 import CreateMessagePage from "src/pages/CreateMessage";
 import { MainPage } from "src/pages/MainPage";
 import { MessagePage } from "src/pages/MessagePage";
@@ -14,6 +15,7 @@ export enum AppRoutes {
   PROCESSED_MESSAGES = "PROCESSED_MESSAGES",
   CREAETE_MESSAGE = "CREATE_MESSAGE",
   PARTNERSHIP = "PARTNERSHIP",
+  ABOUT_SELF = "ABOUT_SELF",
 }
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
@@ -21,6 +23,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.PROCESSED_MESSAGES]: "/processed",
   [AppRoutes.CREAETE_MESSAGE]: "/createMessage",
   [AppRoutes.PARTNERSHIP]: "/partnership",
+  [AppRoutes.ABOUT_SELF]: "/about",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -44,10 +47,14 @@ export const routeConfigPrivate: Record<AppRoutes, RouteProps> = {
   [AppRoutes.CREAETE_MESSAGE]: {
     path: RoutePath.CREATE_MESSAGE,
     element: <CreateMessagePage />,
-  }, 
+  },
   [AppRoutes.PARTNERSHIP]: {
     path: RoutePath.PARTNERSHIP,
     element: <PartnershipPage />,
+  },
+  [AppRoutes.ABOUT_SELF]: {
+    path: RoutePath.ABOUT_SELF,
+    element: <AboutSelf />,
   },
 };
 

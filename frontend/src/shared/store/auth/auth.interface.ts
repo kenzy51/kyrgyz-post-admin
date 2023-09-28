@@ -5,4 +5,5 @@ export interface SignInType {
 
 export interface SignInResponseType {
     token: string;
+    userId:any
 }

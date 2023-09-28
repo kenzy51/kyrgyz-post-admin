@@ -80,6 +80,9 @@ export class UsersService {
     if (dto.password) {
       user.password = dto.password;
     }
+    if(dto.region){
+      user.region = dto.region  
+    }
 
     await user.save();
     return user;

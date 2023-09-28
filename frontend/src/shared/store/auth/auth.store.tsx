@@ -3,7 +3,7 @@ import { activateToken } from "src/shared/ilbs/useToken";
 import { SignInType } from "./auth.interface";
 import { AuthService } from "./auth.service";
 import { useAction } from "src/shared/hooks/useAction";
-const { saveToken, getToken } = activateToken();
+const { saveToken, getToken,saveUserId } = activateToken();
 
 
 class AuthStore {
@@ -23,6 +23,7 @@ class AuthStore {
             })
             console.log(data.token)
             saveToken(data.token)
+            saveUserId(data.userId)
             this.setIsAuth();
         }
         catch (err) {

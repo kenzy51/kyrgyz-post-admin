@@ -77,6 +77,7 @@ const MessagesComponent = observer(() => {
   };
 
   const filteredMessages = messages.filter((m: any) => !m.read);
+  const reversedFilteredMessages = [...filteredMessages].reverse();
 
   const columns = [
     {
@@ -162,7 +163,7 @@ const MessagesComponent = observer(() => {
         onCancel={() => setModalVisible(false)}
         selectedItemId={selectedItemId}
       />
-      <Table columns={columns} dataSource={filteredMessages} rowKey="id" />
+      <Table columns={columns} dataSource={reversedFilteredMessages} rowKey="id" />
       <SenderModal
         visible={modalSender}
         onCancel={() => setModalSender(false)}
