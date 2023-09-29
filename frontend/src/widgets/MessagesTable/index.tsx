@@ -78,7 +78,11 @@ const MessagesComponent = observer(() => {
 
   const filteredMessages = messages.filter((m: any) => !m.read);
   const reversedFilteredMessages = [...filteredMessages].reverse();
-
+  const formatDate = (dateString: string) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric',  };
+    // @ts-ignore
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   const columns = [
     {
       title: "ID сообщения",
@@ -150,6 +154,12 @@ const MessagesComponent = observer(() => {
           Подробнее
         </Button>
       ),
+    },
+    {
+      title: 'Дата создания',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (createdAt) => formatDate(createdAt), // Format the date
     },
   ];
 
