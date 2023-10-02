@@ -27,6 +27,8 @@ export const Candidates = () => {
   const filteredCandidates = candidates.filter(
     (candidate: any) => !candidate?.isAccepted
   );
+
+  const reverserCandidates = filteredCandidates.reverse()
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -106,7 +108,7 @@ export const Candidates = () => {
   return (
     <div>
       <h2>Список непринятых на работу курьеров(кандидаты)</h2>
-      <Table dataSource={filteredCandidates} columns={columns} />
+      <Table dataSource={reverserCandidates} columns={columns} />
       <CandidateModal
         onCancel={() => setVisible(false)}
         visible={visible}

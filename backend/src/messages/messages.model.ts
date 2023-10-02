@@ -64,6 +64,14 @@ export class Message extends Model<Message, MessageCreationAttrs> {
   @Column({ type: DataType.STRING, defaultValue: null })
   region: string;
   //
+  @ApiProperty({
+    example: "Roll Or Pack",
+    description: "Selected type of message",
+  })
+  //
+  @Column({ type: DataType.STRING, defaultValue: null })
+  type: string;
+  //
 
   @ApiProperty({
     example: "Айба отпраавитель",

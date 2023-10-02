@@ -16,7 +16,11 @@ export class CreateMessageDto {
   //
   @ApiProperty({ example: "address", description: "description" })
   @IsString({ message: "It should be a string" })
-  readonly address: string;
+  readonly address: string; 
+  // 
+  @ApiProperty({ example: "type", description: "description for type" })
+  @IsString({ message: "It should be a string" })
+  readonly type: string;
   //
   @ApiProperty({ example: "region", description: "description" })
   readonly region: string;
