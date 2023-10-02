@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { MessagesService } from "./messages.service";
 import { CreateMessageDto, UpdateMessageDto } from "./dto/create-messages.dto";
@@ -39,4 +39,10 @@ export class MessagesController {
   ) {
     return this.messageService.updateMessage(id, updateMessageDto);
   }
+  // 
+  @Delete("/:id")
+  deleteUser(@Param("id") id:number){
+    return this.messageService.deleteMessage(id)
+  }
+  
 }

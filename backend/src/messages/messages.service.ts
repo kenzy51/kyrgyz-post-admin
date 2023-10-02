@@ -31,7 +31,7 @@ export class MessagesService {
     }
     return message;
   }
-  
+
   //
   async getAllMessages() {
     const message = this.messageRepository.findAll({
@@ -39,7 +39,18 @@ export class MessagesService {
     });
     return message;
   }
-
+  //delete message
+  async deleteMessage(id: number) {
+    const message = this.messageRepository.findOne({
+      where: { id },
+    });
+    if (!message) {
+      throw new HttpException("Message wasnt found", HttpStatus.NOT_FOUND);
+    }
+    (await message).destroy();
+    return { message: "message was deleted succesfully" };
+  }
+  // 
   async makeReadMessage(dto: MakeMessageReadDto) {
     const message = await this.messageRepository.findByPk(dto.messageId);
     if (!message) {

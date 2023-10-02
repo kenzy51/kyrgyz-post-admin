@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CreateCourierDto, UpdateCourierDto } from "./dto/create-courier.dto";
 import { CourierService } from "./courier.service";
@@ -28,5 +28,10 @@ export class CourierController {
     @Body() updateCourierDto: UpdateCourierDto
   ) {
     return this.courierService.updateCourier(id, updateCourierDto);
+  }
+  // 
+  @Delete("/:id")
+  deleteCourier(@Param("id") id:number){
+    return this.courierService.deleteCourier(id)
   }
 }

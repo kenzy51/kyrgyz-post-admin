@@ -35,6 +35,14 @@ export class CourierService {
     return courier;
   }
 
+  async deleteCourier(id:number){
+      const courier = await this.courierRepository.findOne({where:{id}});
+      if(!courier){
+        throw new HttpException('courier was not found', HttpStatus.NOT_FOUND);
+      }
+      await courier.destroy();
+      return {message: 'courier was deleted successfully'}
+  }
   async updateCourier(id: number, updateDto: UpdateCourierDto) {
     const courier = await this.courierRepository.findOne({ where: { id } });
     if (!courier) {
