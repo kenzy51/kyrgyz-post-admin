@@ -31,7 +31,7 @@ export const AboutSelf = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${userId}`, {
+      .get(`http://217.29.22.107:5000/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
