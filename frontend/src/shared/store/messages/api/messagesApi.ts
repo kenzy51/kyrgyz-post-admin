@@ -10,4 +10,7 @@ export class MessageApi {
   static updateMessage(id: number, payload: any) {
     return api.put(`${MESSAGES_API}/${id}`, payload);
   }
+  static deleteMessage(id:number){
+    return api.delete(`${MESSAGES_API}/${id}`)
+  }
 }

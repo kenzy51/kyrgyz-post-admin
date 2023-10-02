@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Input, Table, Tag } from "antd";
+import { Input, Table, Tag, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
 import { MessageApi } from "src/shared/store/messages/api/messagesApi";
+import { DeleteOutlined } from "@ant-design/icons";
 
 export const ProcessedMessagesComponent = observer(() => {
   const { messages } = messageStore;
@@ -44,6 +45,23 @@ export const ProcessedMessagesComponent = observer(() => {
     // Include the message in the filtered list if either condition is true
     return idIncludesSearchText || fullnameIncludesSearchText;
   });
+
+  // 
+  const handleDeleteMessage = async (messageId) => {
+    try {
+      await MessageApi.deleteMessage(messageId);
+      messageStore.messages = messageStore.messages.filter(
+        (message) => message.id !== messageId
+      );
+      notification.success({
+        message:'Сообщение удалено успешно'
+      })
+    } catch (error) {
+      console.error("Error deleting message:", error);
+    }
+  };
+
+
   const columns = [
     {
       title: "ID",
@@ -127,6 +145,15 @@ export const ProcessedMessagesComponent = observer(() => {
       render: (courier) => (
         <div className="">
           {courier ? <h4>{courier?.fullName}</h4> : "Отсутствует курьер"}
+        </div>
+      ),
+    }, {
+      title: "",
+      dataIndex: "",
+      key: "",
+      render: (record) => (
+        <div className="">
+          <DeleteOutlined onClick={()=> handleDeleteMessage(record.id)}/>
         </div>
       ),
     },
