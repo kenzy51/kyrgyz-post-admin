@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-
+import specialService from './assets/special.jpg'
 const Container = styled.div`
+text-align: center;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -46,6 +47,7 @@ export const AboutSelf = () => {
 
   return (
     <Container>
+      <img src={specialService} alt="" />
       <Title>Информация о личном кабинете</Title>
       {userData ? (
         <UserInfo>

@@ -79,7 +79,7 @@ const MessagesComponent = observer(() => {
   const filteredMessages = messages.filter((m: any) => !m.read);
   const reversedFilteredMessages = [...filteredMessages].reverse();
   const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric',  };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     // @ts-ignore
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
@@ -106,9 +106,23 @@ const MessagesComponent = observer(() => {
       key: "message",
     },
     {
-      title: "Габарит",
-      dataIndex: "size",
-      key: "size",
+      title: "Тип посылки",
+      dataIndex: "type",
+      key: "type",
+      render: (type) => {
+        if (type === "roll") {
+          return <Tag color="red">Рулон</Tag>;
+        } else if (type === "pack") {
+          return <Tag color="green ">Пакет</Tag>;
+        } else if (type === "package") {
+          return <Tag color="blue ">Посылка</Tag>;
+        }
+        else{
+          return(
+            <p>Тип отсутсвует</p>
+          )
+        }
+      },
     },
 
     {
@@ -156,9 +170,9 @@ const MessagesComponent = observer(() => {
       ),
     },
     {
-      title: 'Дата создания',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: "Дата создания",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (createdAt) => formatDate(createdAt), // Format the date
     },
   ];
@@ -173,7 +187,11 @@ const MessagesComponent = observer(() => {
         onCancel={() => setModalVisible(false)}
         selectedItemId={selectedItemId}
       />
-      <Table columns={columns} dataSource={reversedFilteredMessages} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={reversedFilteredMessages}
+        rowKey="id"
+      />
       <SenderModal
         visible={modalSender}
         onCancel={() => setModalSender(false)}
