@@ -14,7 +14,7 @@ const fieldLabels = {
   dateOfGivenPassport: "Дата выдачи паспорта",
   citizenShip: "Гражданство",
   lastWork: "Последнее место работы",
-  regionOfService: "Какие районы вы можете обсуждать(Город/район)",
+  regionOfService: "Какие районы вы можете обслуживать(Город/район)",
 };
 const regionOptions = [
   "Чуй",
@@ -56,7 +56,7 @@ export const CandidateModal = observer(
     return (
       <Modal
         width={900}
-        visible={visible}
+        open={visible}
         title="Оформить кандидата"
         onCancel={onCancel}
         style={{ display: "flex" }}
@@ -101,13 +101,14 @@ export const CandidateModal = observer(
           </Form.Item>
 
           <Form.Item name="placeOfService" label={fieldLabels.regionOfService}>
-            <Select>
+            {/* <Select>
               {regionOptions.map((region) => (
                 <Select.Option key={region} value={region}>
                   {region}
                 </Select.Option>
               ))}
-            </Select>
+            </Select> */}
+            <Input/>
           </Form.Item>
           <Button htmlType="submit">Сохранить</Button>
         </Form>
