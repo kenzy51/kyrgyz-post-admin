@@ -85,7 +85,7 @@ const MessagesComponent = observer(() => {
   };
   const columns = [
     {
-      title: "ID сообщения",
+      title: "CODE",
       dataIndex: "id",
       key: "id",
     },
@@ -179,9 +179,7 @@ const MessagesComponent = observer(() => {
 
   return (
     <div>
-      <Button type="primary" onClick={handleConfirm}>
-        Подтвердить
-      </Button>
+    
       <ModalComponent
         visible={modalVisible}
         onCancel={() => setModalVisible(false)}

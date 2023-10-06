@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Input, Table, Tag, notification } from "antd";
+import { Button, Input, Table, Tag, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { messageStore } from "src/shared/store/messages/service/messageStore";
@@ -34,15 +34,11 @@ export const ProcessedMessagesComponent = observer(() => {
     };
   }, []);
   const filteredMessages = messages.filter((m) => {
-    // Check if the message is read
     if (!m.read) return false;
 
-    // Check if 'id' and 'fullname' properties exist and include the searchText
     const idIncludesSearchText = m.id && m.id.toString().includes(searchText);
     const fullnameIncludesSearchText =
       m.fullname && m.fullname.includes(searchText);
-
-    // Include the message in the filtered list if either condition is true
     return idIncludesSearchText || fullnameIncludesSearchText;
   });
 
@@ -64,7 +60,7 @@ export const ProcessedMessagesComponent = observer(() => {
 
   const columns = [
     {
-      title: "ID",
+      title: "CODE",
       dataIndex: "id",
       key: "id",
     },
@@ -147,7 +143,19 @@ export const ProcessedMessagesComponent = observer(() => {
           {courier ? <h4>{courier?.fullName}</h4> : "Отсутствует курьер"}
         </div>
       ),
-    }, {
+    }, 
+    {
+      title: "",
+      dataIndex: "",
+      key: "",
+      render: (courier) => (
+       <Button type="primary">
+        Изменить курьера
+       </Button>
+      ),
+    }, 
+    
+    {
       title: "",
       dataIndex: "",
       key: "",

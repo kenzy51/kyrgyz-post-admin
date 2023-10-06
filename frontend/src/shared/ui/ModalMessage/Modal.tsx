@@ -46,7 +46,7 @@ export const ModalComponent = ({ visible, onCancel, selectedItemId }) => {
   };
   const columns = [
     {
-      title: "ID",
+      title: "CODE",
       dataIndex: "id",
       key: "id",
     },
@@ -61,7 +61,7 @@ export const ModalComponent = ({ visible, onCancel, selectedItemId }) => {
       key: "phoneNumber",
     },
     {
-      title:'Тип занятости',
+      title:'Категрия курьера',
       dataIndex:"isUrgent",
       key:"isUrgent",
       render:(isUrgent)=>(
@@ -111,15 +111,15 @@ export const ModalComponent = ({ visible, onCancel, selectedItemId }) => {
 
   const handleCourierSelect = (record) => {
     setSelectedCourier(record);
-    setSelectedCourierId(record.id); // Store the selected courier's ID
-    setIsCourierSelected(true); // Set the flag to indicate that a courier is selected
+    setSelectedCourierId(record.id); 
+    setIsCourierSelected(true); 
     setHoveredCourier(false);
   };
 
   const handleDeselectCourier = () => {
     setSelectedCourier(null);
-    setSelectedCourierId(null); // Clear the selected courier's ID
-    setIsCourierSelected(false); // Set the flag to indicate that no courier is selected
+    setSelectedCourierId(null); 
+    setIsCourierSelected(false);
   };
 
   const filteredCouriers = couriers.filter(

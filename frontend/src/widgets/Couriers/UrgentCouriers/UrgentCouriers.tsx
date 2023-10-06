@@ -1,11 +1,15 @@
-import {  Table } from "antd";
+import {  Button, Table } from "antd";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { CandidatesApi } from "src/shared/store/candidates/api/candidatesApi";
 import { candidateStore } from "src/shared/store/candidates/service/candidateStore";
+import AboutCourierModal from "../AboutCourier/AboutCourierModal";
 
 export const UrgentCouriers = observer(() => {
   const { candidates } = candidateStore;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedCourierId, setSelectedCourierId] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,6 +28,15 @@ export const UrgentCouriers = observer(() => {
   const filteredCandidates = candidates.filter(
     (candidate: any) => candidate.isUrgent
   );
+  const openModal = (id) => {
+    setSelectedCourierId(id);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedCourierId(null);
+    setIsModalVisible(false);
+  };
   const columns = [
     {
       title: "ID",
@@ -40,12 +53,29 @@ export const UrgentCouriers = observer(() => {
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
+    {
+      title: '',
+      dataIndex: '',
+      key: '',
+      render: (record) => {
+        return (
+          <Button onClick={() => openModal(record.id)}>
+            Подробнее о курьере
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
     <div>
         <h3>Список срочных курьеров</h3>
       <Table dataSource={filteredCandidates} columns={columns} />
+      <AboutCourierModal
+        courierId={selectedCourierId}
+        isModalVisible={isModalVisible}
+        closeModal={closeModal}
+      />
     </div>
   );
 });

@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Modal, Form, Button, Input, Select } from "antd";
+import { Modal, Form, Button, Input, Select, DatePicker } from "antd"; // Import DatePicker from Ant Design
 import { observer } from "mobx-react-lite";
 import { candidateStore } from "src/shared/store/candidates/service/candidateStore";
 
 const fieldLabels = {
   passportData: "Паспортные данные",
   dateOfBirth: "Дата рождения",
-  yearOfBirth: "Год рождения",
   addressOfLiving: "Адрес проживания",
   addressByPropise: "Адрес по прописке",
   inn: "ИНН",
@@ -15,7 +14,7 @@ const fieldLabels = {
   dateOfGivenPassport: "Дата выдачи паспорта",
   citizenShip: "Гражданство",
   lastWork: "Последнее место работы",
-  regionOfService: "Район обслуживания",
+  regionOfService: "Какие районы вы можете обсуждать(Город/район)",
 };
 const regionOptions = [
   "Чуй",
@@ -33,6 +32,7 @@ export const CandidateModal = observer(
     const onFinish = async (values) => {
       try {
         await candidateStore.updateCourier(selectedId?.id, values);
+        onCancel();
       } catch (error) {
         console.error("Error processing message:", error);
       }
@@ -56,7 +56,7 @@ export const CandidateModal = observer(
     return (
       <Modal
         width={900}
-        open={visible}
+        visible={visible}
         title="Оформить кандидата"
         onCancel={onCancel}
         style={{ display: "flex" }}
@@ -76,14 +76,11 @@ export const CandidateModal = observer(
 
           {[
             "passportData",
-            "dateOfBirth",
-            "yearOfBirth",
             "addressOfLiving",
             "addressByPropise",
             "inn",
             "numberOfPassport",
             "whoPassport",
-            "dateOfGivenPassport",
             "citizenShip",
             "lastWork",
           ].map((field) => (
@@ -91,6 +88,17 @@ export const CandidateModal = observer(
               <Input />
             </Form.Item>
           ))}
+
+          <Form.Item name="dateOfBirth" label={fieldLabels.dateOfBirth}>
+            <DatePicker format="DD/MM/YYYY" />
+          </Form.Item>
+
+          <Form.Item
+            name="dateOfGivenPassport"
+            label={fieldLabels.dateOfGivenPassport}
+          >
+            <DatePicker format="DD/MM/YYYY" />
+          </Form.Item>
 
           <Form.Item name="placeOfService" label={fieldLabels.regionOfService}>
             <Select>
