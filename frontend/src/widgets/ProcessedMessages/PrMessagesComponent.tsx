@@ -70,7 +70,7 @@ export const ProcessedMessagesComponent = observer(() => {
       key: "address",
     },
     {
-      title: "Кому",
+      title: "Кому(получателю)",
       dataIndex: "name",
       key: "name",
     },
