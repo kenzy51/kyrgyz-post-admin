@@ -83,10 +83,10 @@ export const ModalComponent = ({ visible, onCancel, selectedItemId }) => {
       notification.success({
         message: "Успешно сохранен",
       });
-      setTimeout(() => {
-        onCancel();
-        navigate("/processed");
-      }, 10);
+      // setTimeout(() => {
+      //   onCancel();
+      //   navigate("/processed");
+      // }, 10);
     } catch (error) {
       console.error("Error processing message:", error);
     }
